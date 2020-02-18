@@ -24,6 +24,7 @@ console.log("Reducer..")
 switch (action.type) {
   case ADD_ITEM:
     return {...state,
+    additionalPrice: state.additionalPrice + action.payload.price,
     car: {...state.car,
     features: [...state.car.features, action.payload]
   },//this closes add_item car features
@@ -33,8 +34,10 @@ case REMOVE_ITEM:
   return{
     ...state,
     car: {...state.car,
-    features: [...state.car.features.filter(item => (item !== action.payload))]
-  }//this closes remove_item car features
+    features: state.car.features.filter(item => (item.id !== action.payload.id))
+  },//this closes remove_item car features
+  additionalFeatures: [...state.additionalFeatures, action.payload],
+  additionalPrice: state.additionalPrice - action.payload.price
   }//this closes remove_item return
   default:
     return state;
